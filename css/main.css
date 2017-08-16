@@ -1,0 +1,41 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: #424242; /* Material design, "Grey", 800 */
+}
+
+/* Misc classes */
+.horizontal-align
+{
+    display: flex;
+    justify-content: center;
+}
+
+.vertical-align
+{
+    display: flex;
+    align-items: center;
+}
+
+.total-align
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* END */
+
+/* Main container */
+#main-container
+{
+    margin-top: 10px;
+    background-color: #616161; /* Material design, "Grey", 700 */
+
+    box-shadow: 2px 2px 10px #212121; /* Material design, "Grey", 900 */
+    -webkit-box-shadow: 2px 2px 10px #212121;
+    -moz-box-shadow: 2px 2px 10px #212121;
+    -o-box-shadow: 2px 2px 10px #212121;
+}
+/* END */

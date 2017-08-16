@@ -1,0 +1,242 @@
+/* Item list */
+ul.items
+{
+    margin: 10px;
+    padding: 0;
+    list-style-type: none;
+
+    box-shadow: 1px 1px 5px #212121; /* Material design, "Grey", 900 */
+    -webkit-box-shadow: 1px 1px 5px #212121;
+    -moz-box-shadow: 1px 1px 5px #212121;
+    -o-box-shadow: 1px 1px 5px #212121;
+}
+/* END */
+
+/* Item list item */
+ul.items li.item
+{
+    padding: 0;
+    margin: 0;
+}
+/* END */
+
+/* ALL item links */
+ul.items a
+{
+    display: block;
+    padding: 10px;
+    color: white;
+    background-color: #757575; /* Material design, "Grey", 600 */
+    text-decoration: none;
+    font-size: 1.3em;
+    width: 300px;
+
+    -webkit-transition: background-color 250ms;
+    -moz-transition: background-color 250ms;
+    -ms-transition: background-color 250ms;
+    -o-transition: background-color 250ms;
+    transition: background-color 250ms;
+}
+
+ul.items a:hover
+{
+    background-color: #424242; /* Material design, "Grey", 800 */
+
+    -webkit-transition: background-color 250ms;
+    -moz-transition: background-color 250ms;
+    -ms-transition: background-color 250ms;
+    -o-transition: background-color 250ms;
+    transition: background-color 250ms;
+}
+/* END */
+
+/* DONE item links */
+ul.items a.item-done
+{
+    /*color: #66BB6A; /* Material design, "Green", 400 */
+    text-decoration: line-through;
+}
+/* END */
+
+/* UN-DONE item links */
+ul.items a.item-undone
+{
+    /*color: #EF5350; /* Material design, "Red", 400 */
+    text-decoration: none;
+}
+/* END */
+
+/* Item checkbox "mini" form */
+.item-checkbox /* Invisible container of checkbox that holds the actual checkbox and "tick"; this is the div element */
+{
+    width: 25px;
+    float: left;
+    position: relative;
+}
+
+.item-checkbox label /*  */
+{
+    cursor: pointer;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 0;
+    left: 0;
+    background: #eee;
+    border: 1px solid #ddd;
+}
+
+.item-checkbox label:after /* Style of the tick when unchecked and no hover */
+{
+    outline: none;
+    opacity: 0.2;
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 7px;
+    background: transparent;
+    top: 6px;
+    left: 5px;
+    border: 3px solid #333;
+    border-top: none;
+    border-right: none;
+
+    /* Rotate the border so it looks like a checkbox tick. */
+    -webkit-transform: translateZ(1px) rotate(-45deg);
+    -moz-transform: translateZ(1px) rotate(-45deg);
+    -ms-transform: translateZ(1px) rotate(-45deg);
+    -o-transform: translateZ(1px) rotate(-45deg);
+    transform: translateZ(1px) rotate(-45deg);
+
+    -webkit-transition: opacity 250ms;
+    -moz-transition: opacity 250ms;
+    -ms-transition: opacity 250ms;
+    -o-transition: opacity 250ms;
+    transition: opacity 250ms;
+}
+
+.item-checkbox label:hover::after /* Style of the tick when user hovers over checkbox */
+{
+    opacity: 0.5;
+
+    -webkit-transition: opacity 250ms;
+    -moz-transition: opacity 250ms;
+    -ms-transition: opacity 250ms;
+    -o-transition: opacity 250ms;
+    transition: opacity 250ms;
+}
+
+.item-checkbox input[type=checkbox]:checked + label:after /* Style of the tick when checked */
+{
+    opacity: 1;
+
+    -webkit-transition: opacity 250ms;
+    -moz-transition: opacity 250ms;
+    -ms-transition: opacity 250ms;
+    -o-transition: opacity 250ms;
+    transition: opacity 250ms;
+}
+/* END */
+
+/* Item name */
+.item-content
+{
+    margin: 0px 0px 0px 10px;
+    padding: 0px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+/* END */
+
+/* Item name inputs */
+input.item-content
+{
+    background-color: #424242; /* Material design, "Grey", 800 */
+}
+/* END */
+
+/* Item add form */
+form.item-add
+{
+    margin: 10px;
+}
+/* END */
+
+/* Item name */
+form.item-add input.input
+{
+    padding: 5px;
+    color: white;
+    background-color: #757575; /* Material design, "Grey", 600 */
+    border: none;
+    outline: none;
+    width: 300px;
+
+    box-shadow: 1px 1px 5px #212121; /* Material design, "Grey", 900 */
+    -webkit-box-shadow: 1px 1px 5px #212121;
+    -moz-box-shadow: 1px 1px 5px #212121;
+    -o-box-shadow: 1px 1px 5px #212121;
+}
+
+/* Placeholder text color */
+form.item-add input.input::-webkit-input-placeholder /* Chrome/Opera/Safari */
+{
+    color: white;
+    opacity: 1;
+}
+
+form.item-add input.input::-moz-placeholder /* Firefox 19+ */
+{
+    color: white;
+    opacity: 1;
+}
+
+form.item-add input.input:-ms-input-placeholder /* IE 10+ */
+{
+    color: white;
+    opacity: 1;
+}
+
+form.item-add input.input:-moz-placeholder /* Firefox 18- */
+{
+    color: white;
+    opacity: 1;
+}
+
+/* END */
+
+/* Add item button */
+form.item-add input.submit
+{
+    padding: 5px;
+    color: white;
+    background-color: #424242; /* Material design, "Grey", 800 */
+    font-size: 1.2em;
+    border: none;
+    outline: none;
+    width: 300px;
+
+    box-shadow: 2px 2px 5px #212121; /* Material design, "Grey", 900 */
+    -webkit-box-shadow: 2px 2px 5px #212121;
+    -moz-box-shadow: 2px 2px 3px #212121;
+    -o-box-shadow: 2px 2px 3px #212121;
+
+    -webkit-transition: background-color 250ms;
+    -moz-transition: background-color 250ms;
+    -ms-transition: background-color 250ms;
+    -o-transition: background-color 250ms;
+    transition: background-color 250ms;
+}
+
+form.item-add input.submit:hover
+{
+    background-color: #212121; /* Material design, "Grey", 900 */
+
+    -webkit-transition: background-color 250ms;
+    -moz-transition: background-color 250ms;
+    -ms-transition: background-color 250ms;
+    -o-transition: background-color 250ms;
+    transition: background-color 250ms;
+}
+/* END */
