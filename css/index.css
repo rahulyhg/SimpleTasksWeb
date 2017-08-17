@@ -50,18 +50,14 @@ ul.items a:hover
 }
 /* END */
 
-/* DONE item links */
+/* Completion status item links */
 ul.items a.item-done
 {
-    /*color: #66BB6A; /* Material design, "Green", 400 */
     text-decoration: line-through;
 }
-/* END */
 
-/* UN-DONE item links */
 ul.items a.item-undone
 {
-    /*color: #EF5350; /* Material design, "Red", 400 */
     text-decoration: none;
 }
 /* END */
@@ -118,23 +114,11 @@ ul.items a.item-undone
 .item-checkbox label:hover::after /* Style of the tick when user hovers over checkbox */
 {
     opacity: 0.5;
-
-    -webkit-transition: opacity 250ms;
-    -moz-transition: opacity 250ms;
-    -ms-transition: opacity 250ms;
-    -o-transition: opacity 250ms;
-    transition: opacity 250ms;
 }
 
 .item-checkbox input[type=checkbox]:checked + label:after /* Style of the tick when checked */
 {
     opacity: 1;
-
-    -webkit-transition: opacity 250ms;
-    -moz-transition: opacity 250ms;
-    -ms-transition: opacity 250ms;
-    -o-transition: opacity 250ms;
-    transition: opacity 250ms;
 }
 /* END */
 
@@ -219,8 +203,8 @@ form.item-add input.submit
 
     box-shadow: 2px 2px 5px #212121; /* Material design, "Grey", 900 */
     -webkit-box-shadow: 2px 2px 5px #212121;
-    -moz-box-shadow: 2px 2px 3px #212121;
-    -o-box-shadow: 2px 2px 3px #212121;
+    -moz-box-shadow: 2px 2px 5px #212121;
+    -o-box-shadow: 2px 2px 5px #212121;
 
     -webkit-transition: background-color 250ms;
     -moz-transition: background-color 250ms;

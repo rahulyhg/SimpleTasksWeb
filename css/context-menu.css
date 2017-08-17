@@ -1,43 +1,61 @@
 /* Custom context menu */
-.context-menu {
+.context-menu
+{
     display: none;
     position: absolute;
     z-index: 10;
-    padding: 12px 0;
+    padding: 0;
     width: 240px;
-    background-color: #fff;
-    border: solid 1px #dfdfdf;
-    box-shadow: 1px 1px 2px #cfcfcf;
+    background-color: #424242; /* Material design, "Grey", 800 */
+    font-size: 1.15em;
+
+    box-shadow: 2px 2px 10px #212121; /* Material design, "Grey", 900 */
+    -webkit-box-shadow: 2px 2px 10px #212121;
+    -moz-box-shadow: 2px 2px 10px #212121;
+    -o-box-shadow: 2px 2px 10px #212121;
 }
 
-.context-menu--active {
+.context-menu--active
+{
     display: block;
 }
 
-.context-menu__items {
+.context-menu__items
+{
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.context-menu__item {
+.context-menu__item
+{
     display: block;
     margin-bottom: 4px;
 }
 
-.context-menu__item:last-child {
+.context-menu__item:last-child
+{
     margin-bottom: 0;
 }
 
-.context-menu__link {
+.context-menu__link
+{
     display: block;
     padding: 4px 12px;
-    color: #0066aa;
+    color: white;
     text-decoration: none;
+
+    -webkit-transition: background-color 250ms;
+    -moz-transition: background-color 250ms;
+    -ms-transition: background-color 250ms;
+    -o-transition: background-color 250ms;
+    transition: background-color 250ms;
 }
 
-.context-menu__link:hover {
-    color: #fff;
-    background-color: #0066aa;
+.context-menu__link:hover
+{
+    color: white;
+    background-color: #212121; /* Material design, "Grey", 700 */
+    text-decoration: none;
 }
 /* END */
