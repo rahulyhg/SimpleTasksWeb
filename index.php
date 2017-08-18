@@ -39,6 +39,10 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
+    <!-- Custom fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -55,7 +59,7 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
     <!-- Main content -->
     <div id="main-container" class="container">
         <div class="row">
-            <h1 class="text-center"><?= $appName; ?></h1>
+            <h1 style="font-weight: 700;" class="text-center"><?= $appName; ?></h1>
         </div>
 
         <div class="row">
@@ -72,7 +76,7 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
                                 $isDone = $item['done'];
                                 $doneStatus = $isDone ? 'done' : 'undone';
 
-                                //Create an action link for a user to do depending on the done status
+                                //Create links for different actions
                                 $markMsg = $isDone ? 'mark.php?as=undone&item=' . $id : 'mark.php?as=done&item=' . $id;
                                 $viewMsg = 'view.php?item=' . $id;
                                 $editMsg = 'edit.php?item=' . $id; ?>
@@ -89,8 +93,14 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
                                     </form>
 
                                     <form action="<?= $editMsg; ?>" method="post">
-                                        <span id="item-content-<?= $id; ?>" class="item-content"><?= $name; ?></span>
-                                        <input style="display: none;" id="item-content-edit-<?= $id; ?>" class="item-content" type="text" name="content" value="<?= $name; ?>">
+                                        <span id="item-name-<?= $id; ?>" class="item-name"><?= $name; ?></span>
+                                        <input style="display: none;"
+                                               id="item-name-edit-<?= $id; ?>"
+                                               class="item-name"
+                                               autocomplete="off"
+                                               type="text"
+                                               name="name"
+                                               value="<?= $name; ?>">
                                     </form>
                                 </a>
                             </li>
@@ -108,78 +118,13 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
                     <input class="input" name="name" placeholder="Enter a task to complete..." autocomplete="off" required>
                     <br>
                     <br>
-                    <input class="submit" type="submit" value="Add">
+                    <input class="btn submit" type="submit" value="Add">
                 </form>
             </div>
         </div>
     </div>
 
     <?php include 'app/context-menu.php' ?>
-
-    <script>
-        //Add event for when a user wants to view an item through the context menu
-        document.addEventListener("onTaskView", function()
-        {
-            window.location.href = "view.php?item=" + contextMenu.taskItemInContext.getAttribute("data-id");
-        });
-
-        //Add event listener for when a user wants to edit an item through the context menu
-        document.addEventListener("onTaskEdit", function()
-        {
-            //Find the current task
-            var itemText = document.getElementById("item-content-" + contextMenu.taskItemInContext.getAttribute("data-id"));
-            var itemInput = document.getElementById("item-content-edit-" + contextMenu.taskItemInContext.getAttribute("data-id"));
-            var oldValue = itemInput.value;
-
-            //Turn off the item display text and turn on the input
-            function toggleItemTextOff()
-            {
-                itemText.style.display = "none";
-                itemInput.style.display = "inline-block";
-            }
-
-            //Turn off the item input and turn on the input text
-            function toggleItemInputOff()
-            {
-                itemText.style.display = "inline-block";
-                itemInput.style.display = "none";
-            }
-
-            toggleItemTextOff();
-
-            //Remove readonly and focus on element
-            itemInput.readOnly = false;
-            itemInput.focus();
-
-            //Highlight all of the text in the input
-            itemInput.setSelectionRange(0, itemInput.value.length);
-
-            //Remove readonly when focus is lost
-            itemInput.addEventListener("focusout", function()
-            {
-                itemInput.readOnly = true;
-                itemInput.value = oldValue;
-
-                toggleItemInputOff();
-            });
-
-            //Listen for the escape key to be pressed
-            window.onkeyup = function(e)
-            {
-                if(e.keyCode === 27) //Escape key
-                {
-                    itemInput.blur(); //Revert back the text to the old stuff
-                    toggleItemInputOff();
-                }
-            };
-        });
-
-        //Add event listener for when a user wants to delete an item through the context menu
-        document.addEventListener("onTaskDelete", function()
-        {
-            window.location.href = "delete.php?item=" + contextMenu.taskItemInContext.getAttribute("data-id");
-        });
-    </script>
 </body>
 
 </html>

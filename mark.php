@@ -44,4 +44,4 @@ if(isset($_GET['as'], $_GET['item']))
     }
 }
 
-header('Location: index.php');
+header('Location: ' . $_SERVER['HTTP_REFERER']);

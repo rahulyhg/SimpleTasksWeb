@@ -7,29 +7,35 @@
 
 require_once 'app/init.php';
 
-if(!isset($_GET['item'], $_POST['content']))
+if(!isset($_GET['item']))
 {
     die('No item found!');
 }
 
-$content = trim($_POST['content']);
-
-if(empty($content))
+if(!isset($_POST['name']))
 {
-    return;
+    die('No item name found!');
+}
+
+$name = trim($_POST['name'], ' ');
+var_dump($name);
+
+if(empty($name))
+{
+    die("Name was empty!");
 }
 
 $itemsQuery = $db->prepare("
     UPDATE items
-    SET name = :content
+    SET name = :name
     WHERE id = :id
     AND user = :user
 ");
 
 $itemsQuery->execute([
-    'content' => $content,
+    'name' => $name,
     'id' => $_GET['item'],
     'user' => $_SESSION['user_id']
 ]);
 
-header('Location: index.php');
+header('Location: ' . $_SERVER['HTTP_REFERER']);

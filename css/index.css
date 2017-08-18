@@ -9,6 +9,10 @@ ul.items
     -webkit-box-shadow: 1px 1px 5px #212121;
     -moz-box-shadow: 1px 1px 5px #212121;
     -o-box-shadow: 1px 1px 5px #212121;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 /* END */
 
@@ -30,6 +34,11 @@ ul.items a
     text-decoration: none;
     font-size: 1.3em;
     width: 300px;
+    overflow: hidden;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 
     -webkit-transition: background-color 250ms;
     -moz-transition: background-color 250ms;
@@ -78,8 +87,12 @@ ul.items a.item-undone
     height: 25px;
     top: 0;
     left: 0;
-    background: #eee;
-    border: 1px solid #ddd;
+    background: #E0E0E0; /* Material design, "Grey", 300 */
+    border: 1px solid #BDBDBD; /* Material design, "Grey", 400 */
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 }
 
 .item-checkbox label:after /* Style of the tick when unchecked and no hover */
@@ -93,7 +106,7 @@ ul.items a.item-undone
     background: transparent;
     top: 6px;
     left: 5px;
-    border: 3px solid #333;
+    border: 3px solid #212121; /* Material design, "Grey", 900 */
     border-top: none;
     border-right: none;
 
@@ -123,10 +136,10 @@ ul.items a.item-undone
 /* END */
 
 /* Item name */
-.item-content
+.item-name
 {
-    margin: 0px 0px 0px 10px;
-    padding: 0px;
+    margin: 0 0 0 10px;
+    padding: 0;
     background-color: transparent;
     border: none;
     outline: none;
@@ -134,7 +147,7 @@ ul.items a.item-undone
 /* END */
 
 /* Item name inputs */
-input.item-content
+input.item-name
 {
     background-color: #424242; /* Material design, "Grey", 800 */
 }
@@ -156,6 +169,10 @@ form.item-add input.input
     border: none;
     outline: none;
     width: 300px;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 
     box-shadow: 1px 1px 5px #212121; /* Material design, "Grey", 900 */
     -webkit-box-shadow: 1px 1px 5px #212121;
@@ -186,41 +203,5 @@ form.item-add input.input:-moz-placeholder /* Firefox 18- */
 {
     color: white;
     opacity: 1;
-}
-
-/* END */
-
-/* Add item button */
-form.item-add input.submit
-{
-    padding: 5px;
-    color: white;
-    background-color: #424242; /* Material design, "Grey", 800 */
-    font-size: 1.2em;
-    border: none;
-    outline: none;
-    width: 300px;
-
-    box-shadow: 2px 2px 5px #212121; /* Material design, "Grey", 900 */
-    -webkit-box-shadow: 2px 2px 5px #212121;
-    -moz-box-shadow: 2px 2px 5px #212121;
-    -o-box-shadow: 2px 2px 5px #212121;
-
-    -webkit-transition: background-color 250ms;
-    -moz-transition: background-color 250ms;
-    -ms-transition: background-color 250ms;
-    -o-transition: background-color 250ms;
-    transition: background-color 250ms;
-}
-
-form.item-add input.submit:hover
-{
-    background-color: #212121; /* Material design, "Grey", 900 */
-
-    -webkit-transition: background-color 250ms;
-    -moz-transition: background-color 250ms;
-    -ms-transition: background-color 250ms;
-    -o-transition: background-color 250ms;
-    transition: background-color 250ms;
 }
 /* END */

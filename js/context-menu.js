@@ -4,6 +4,7 @@
 var contextMenu = {
     viewTaskEvent : null,
     editTaskEvent: null,
+    markTaskEvent: null,
     deleteTaskEvent: null,
 
     contextMenuClassName : "context-menu",
@@ -111,6 +112,7 @@ var contextMenu = {
      */
     contextMenu.viewTaskEvent = new Event("onTaskView");
     contextMenu.editTaskEvent = new Event("onTaskEdit");
+    contextMenu.markTaskEvent = new Event("onTaskMark");
     contextMenu.deleteTaskEvent = new Event("onTaskDelete");
 
     contextMenu.menu = document.querySelector("#context-menu");
@@ -205,13 +207,6 @@ var contextMenu = {
      */
     function menuItemListener(link)
     {
-        /*
-        alert("Task ID: " +
-            contextMenu.taskItemInContext.getAttribute("data-id") +
-            ", Task Action: " +
-            link.getAttribute("data-action"));
-        */
-
         var dataAction = link.getAttribute("data-action");
 
         if(dataAction === "View")
@@ -221,6 +216,10 @@ var contextMenu = {
         else if(dataAction === "Edit")
         {
             document.dispatchEvent(contextMenu.editTaskEvent);
+        }
+        else if(dataAction === "Mark")
+        {
+            document.dispatchEvent(contextMenu.markTaskEvent);
         }
         else if(dataAction === "Delete")
         {

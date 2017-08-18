@@ -1,0 +1,20 @@
+.item-name
+{
+    margin: 10px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 2em;
+    font-weight: 400;
+}
+
+.item-name__edit
+{
+    background-color: #424242; /* Material design, "Grey", 800 */
+}
+
+.submit
+{
+    margin: 10px;
+}

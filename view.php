@@ -37,6 +37,11 @@ foreach($items as $item)
     $itemDone = $item['done'];
     break; //Break on the first item since we should only be dealing with one item anyways
 }
+
+//Create links for different actions
+$markMsg = $itemDone ? 'mark.php?as=undone&item=' . $itemId : 'mark.php?as=done&item=' . $itemId;
+//$viewMsg = 'view.php?item=' . $id;
+$editMsg = 'edit.php?item=' . $itemId;
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,8 +63,13 @@ foreach($items as $item)
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
+    <!-- Custom fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/view.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -72,9 +82,48 @@ foreach($items as $item)
     <!-- Main content -->
     <div id="main-container" class="container">
         <div class="row">
-            <h2 class="text-center"><?= $itemName; ?></h2>
+            <div class="horizontal-align">
+                <form action="<?= $editMsg; ?>" method="post" name="editOnPageForm">
+                    <label id="item-name-label" for="item-name" class="item-name <?php if($itemDone) { echo 'line-through'; } ?>" contenteditable><?= $itemName; ?></label>
+                    <input id="item-name" class="item-name" type="hidden" name="name" value="<?= $itemName; ?>">
+                </form>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="horizontal-align">
+                <a class="btn submit text-center" href="redirect.php?url=index.php"><i class="fa fa-arrow-left text-success"></i> Go Back</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="horizontal-align">
+                <form action="<?= $markMsg; ?>" method="post">
+                    <button class="btn submit" type="submit">
+                        <i class="fa fa-check <?php if($itemDone) { echo 'text-danger'; } else { echo 'text-success'; } ?>"></i>
+                        Mark as <?php if($itemDone) { echo 'Incomplete'; } else { echo 'Complete'; } ?>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="horizontal-align">
+                <button class="btn submit" onclick="submit(document.getElementById('item-name'), document.getElementById('item-name-label'))">
+                    <i class="fa fa-edit text-success"></i>
+                    Save
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="horizontal-align">
+                <a class="btn submit text-center" href="delete.php?item=<?= $itemId; ?>"><i class="fa fa-times text-danger"></i> Delete</a>
+            </div>
         </div>
     </div>
+
+    <script src="js/view.js"></script>
 </body>
 
 </html>
