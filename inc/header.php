@@ -23,8 +23,13 @@
 
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="nav-link" href="/register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a class="nav-link" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <?php if(isAuthenticated()): ?>
+                    <li><a class="nav-link" href="/account.php">My Account</a></li>
+                    <li><a class="nav-link" href="/procedures/logoutUser.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <?php else: ?>
+                    <li><a class="nav-link" href="/login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a class="nav-link" href="/register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

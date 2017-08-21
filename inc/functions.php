@@ -13,12 +13,21 @@ function request()
     return \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 }
 
-function redirect($url)
+function redirect($url, $extra = [])
 {
     //Get the response
     $response = \Symfony\Component\HttpFoundation\Response::create(null,
         \Symfony\Component\HttpFoundation\Response::HTTP_FOUND,
         ['Location' => $url]);
+
+    //Check for extras
+    if(key_exists('cookies', $extra))
+    {
+        foreach($extra['cookies'] as $cookie)
+        {
+            $response->headers->setCookie($cookie);
+        }
+    }
 
     //Send the response
     $response->send();
@@ -230,6 +239,38 @@ function findUserByEmail($email)
     }
 }
 
+function findUserByAccessToken()
+{
+    global $db;
+
+    try
+    {
+        $userId = decodeJWT('sub');
+    }
+    catch(\Exception $e)
+    {
+        throw $e;
+    }
+
+    try
+    {
+        $query = $db->prepare("
+            SELECT * FROM users
+            WHERE id = :user
+        ");
+
+        $query->execute([
+            'user' => $userId
+        ]);
+
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+    catch(\Exception $e)
+    {
+        throw $e;
+    }
+}
+
 function createUser($username, $email, $password)
 {
     global $db;
@@ -254,4 +295,121 @@ function createUser($username, $email, $password)
     {
         throw $e;
     }
+}
+
+function updatePassword($password, $userId)
+{
+    global $db;
+
+    try
+    {
+        $query = $db->prepare("
+            UPDATE users
+            SET password = :password
+            WHERE id = :user
+        ");
+
+        $query->execute([
+            'password' => $password,
+            'user' => $userId,
+        ]);
+    }
+    catch(\Exception $e)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+function decodeJWT($prop = null)
+{
+    \Firebase\JWT\JWT::$leeway = 1;
+    $jwt = \Firebase\JWT\JWT::decode(
+        request()->cookies->get('access_token'),
+        getenv('SECRET_KEY'),
+        ['HS256']
+    );
+
+    if($prop == null)
+    {
+        return $jwt;
+    }
+    else
+    {
+        return $jwt->{$prop};
+    }
+}
+
+function isAuthenticated()
+{
+    if(!request()->cookies->has('access_token'))
+    {
+        return false;
+    }
+
+    try
+    {
+        decodeJWT();
+        return true;
+    }
+    catch(\Exception $e)
+    {
+        return false;
+    }
+}
+
+function requireAuth()
+{
+    if(!isAuthenticated())
+    {
+        $accessToken = new \Symfony\Component\HttpFoundation\Cookie('access_token',
+            'Expired',
+            time() - 3600,
+            '/',
+            getenv('COOKIE_DOMAIN'));
+        redirect("../login.php", ['cookies' => [$accessToken]]);
+    }
+}
+
+function displaySuccess()
+{
+    global $session;
+
+    if(!$session->getFlashBag()->has('success'))
+    {
+        return;
+    }
+
+    $messages = $session->getFlashBag()->get('success');
+
+    $response = '<div style="margin: 10px" class="alert alert-success alert-dismissable">';
+    foreach($messages as $message)
+    {
+        $response .= "{$message}<br>";
+    }
+    $response .= '</div>';
+
+    return $response;
+}
+
+function displayErrors()
+{
+    global $session;
+
+    if(!$session->getFlashBag()->has('error'))
+    {
+        return;
+    }
+
+    $messages = $session->getFlashBag()->get('error');
+
+    $response = '<div style="margin: 10px" class="alert alert-danger alert-dismissable">';
+    foreach($messages as $message)
+    {
+        $response .= "{$message}<br>";
+    }
+    $response .= '</div>';
+
+    return $response;
 }
