@@ -1,25 +1,13 @@
 <?php
 /**
  * Author: Kyle Stankovich
- * Date: 8/9/17
- * Time: 4:00 PM
+ * Date: 8/21/17
+ * Time: 2:47 AM
  */
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
-requireAuth();
-
-$itemsQuery = $db->prepare("
-    SELECT id, name, done
-    FROM items
-    WHERE user = :user
-");
-
-$itemsQuery->execute([
-    'user' => 1
-]);
-
-$items = $itemsQuery->rowCount() ? $itemsQuery : [];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +39,7 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
 
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/register.css">
     <link rel="stylesheet" type="text/css" href="css/context-menu.css">
 </head>
 
@@ -62,26 +50,14 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
     <div id="main-container" class="container">
         <div class="row">
             <div class="horizontal-align">
-                <?php if(empty($items)): ?>
-                    <p>You haven't added any items yet!</p>
-                <?php else: ?>
-                    <ul class="items">
-                        <?php foreach(getAllTasks() as $task): ?>
-                            <li class="item" data-id="<?= $task['id']; ?>">
-                                <?php include 'inc/task.php'; ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="horizontal-align">
-                <form class="item-add" action="procedures/addTask.php" method="post">
-                    <input class="input-field" name="name" placeholder="Enter a task to complete..." autocomplete="off" required>
+                <form action="procedures/loginUser.php" method="post">
+                    <h1 style="margin: 0; padding: 0" class="text-center">Login</h1>
+                    <?php echo displayErrors(); ?>
+                    <input class="input-field light-placeholder" name="username" placeholder="Username/Email..." autocomplete="off" required>
                     <br>
-                    <input class="btn submit" type="submit" value="Add">
+                    <input class="input-field light-placeholder" type="password" name="password" placeholder="Password..." autocomplete="off" required>
+                    <br>
+                    <input style="" class="btn submit" type="submit" value="Login">
                 </form>
             </div>
         </div>
@@ -95,9 +71,9 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
 
     <!-- jQuery -->
     <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
 
     <!-- Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"

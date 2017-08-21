@@ -1,0 +1,6 @@
+composer.phar
+composer_2.phar
+/vendor/
+composer.lock
+config.php
+/inc/.env

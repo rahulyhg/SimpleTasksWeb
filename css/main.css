@@ -26,6 +26,21 @@ body
     justify-content: center;
     align-items: center;
 }
+
+.alert
+{
+    box-shadow: 0 0 10px #212121; /* Material design, "Grey", 900 */
+    -webkit-box-shadow: 0 0 10px #212121;
+    -moz-box-shadow: 2px 2px 10px #212121;
+    -o-box-shadow: 2px 2px 10px #212121;
+}
+
+.alert-danger
+{
+    border: 1px solid black !important;
+    background-color: #D32F2F !important; /* Material design, "Red", 700 */
+    color: #FFEBEE !important; /* Material design, "Red", 50 */
+}
 /* END */
 
 /* Navbar */
@@ -61,7 +76,7 @@ body
 
 .navbar-inverse
 {
-    background-color: #212121 !important;
+    background-color: #212121 !important; /* Material design, "Grey", 900 */
     border: none;
 
     box-shadow: 1px 3px 5px black;
@@ -72,7 +87,7 @@ body
 
 .navbar-brand
 {
-    color: #E0E0E0 !important;
+    color: #E0E0E0 !important; /* Material design, "Grey", 300 */
     font-size: 2em !important;
 
     -webkit-transition: color 250ms;
@@ -89,7 +104,7 @@ body
 
 .nav-link
 {
-    color: #E0E0E0;
+    color: #E0E0E0; /* Material design, "Grey", 300 */
 
     -webkit-transition: color 250ms;
     -moz-transition: color 250ms;
