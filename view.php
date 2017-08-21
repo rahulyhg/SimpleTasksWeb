@@ -8,6 +8,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
 
+/*
 if(!isset($_GET['item']))
 {
     die('No item found!');
@@ -26,7 +27,11 @@ $itemsQuery->execute([
 ]);
 
 $items = $itemsQuery->rowCount() ? $itemsQuery : [];
+*/
 
+$task = getTask(request()->get('item'));
+
+/*
 //Since we are should only be dealing with one item, we can get the item's information up here to prevent any other loops except for the one right here
 $itemId = 0;
 $itemName = "";
@@ -38,10 +43,11 @@ foreach($items as $item)
     $itemDone = $item['done'];
     break; //Break on the first item since we should only be dealing with one item anyways
 }
+*/
 
 //Create links for different actions
-$markMsg = $itemDone ? '/procedures/markTask.php?as=undone&item=' . $itemId : '/procedures/markTask.php?as=done&item=' . $itemId;
-$editMsg = '/procedures/editTask.php?item=' . $itemId;
+$markMsg = $task['done'] ? '/procedures/markTask.php?as=undone&item=' . $task['id'] : '/procedures/markTask.php?as=done&item=' . $task['id'];
+$editMsg = '/procedures/editTask.php?item=' . $task['id'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -55,7 +61,7 @@ $editMsg = '/procedures/editTask.php?item=' . $itemId;
     <meta name="author" content="">
     <link rel="icon" href="favicon.png">
 
-    <title><?= $itemName; ?></title>
+    <title><?= $task['name']; ?></title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -87,7 +93,7 @@ $editMsg = '/procedures/editTask.php?item=' . $itemId;
         <div class="row">
             <div class="horizontal-align">
                 <form action="<?= $editMsg; ?>" method="post" name="editOnPageForm">
-                    <label id="item-name-label" for="item-name" class="item-name <?php if($itemDone) { echo 'line-through'; } ?>" contenteditable><?= $itemName; ?></label>
+                    <label id="item-name-label" for="item-name" class="item-name <?php if($task['done']) { echo 'line-through'; } ?>" contenteditable><?= $task['name']; ?></label>
                     <input id="item-name" class="item-name" type="hidden" name="name" value="<?= $itemName; ?>">
                 </form>
             </div>
@@ -103,8 +109,8 @@ $editMsg = '/procedures/editTask.php?item=' . $itemId;
             <div class="horizontal-align">
                 <form action="<?= $markMsg; ?>" method="post">
                     <button class="btn submit" type="submit">
-                        <i class="fa fa-check <?php if($itemDone) { echo 'text-danger'; } else { echo 'text-success'; } ?>"></i>
-                        Mark as <?php if($itemDone) { echo 'Incomplete'; } else { echo 'Complete'; } ?>
+                        <i class="fa fa-check <?php if($task['done']) { echo 'text-danger'; } else { echo 'text-success'; } ?>"></i>
+                        Mark as <?php if($task['done']) { echo 'Incomplete'; } else { echo 'Complete'; } ?>
                     </button>
                 </form>
             </div>
@@ -121,7 +127,7 @@ $editMsg = '/procedures/editTask.php?item=' . $itemId;
 
         <div class="row">
             <div class="horizontal-align">
-                <a class="btn submit text-center" href="procedures/deleteTask.php?item=<?= $itemId; ?>"><i class="fa fa-times text-danger"></i> Delete</a>
+                <a class="btn submit text-center" href="procedures/deleteTask.php?item=<?= $task['id']; ?>"><i class="fa fa-times text-danger"></i> Delete</a>
             </div>
         </div>
     </div>

@@ -20,7 +20,7 @@ if($newPassword != $confirmPassword)
 }
 
 //Get the current user
-$user = findUserByAccessToken();
+$user = getCurrentUser();
 if(empty($user))
 {
     $session->getFlashBag()->add('error', 'Couldn\'t retrieve the user details. Try logging out and then log back in.');

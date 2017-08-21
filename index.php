@@ -6,19 +6,17 @@
  */
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
-requireAuth();
 
-$itemsQuery = $db->prepare("
-    SELECT id, name, done
-    FROM items
-    WHERE user = :user
-");
+$tasks = [];
 
-$itemsQuery->execute([
-    'user' => 1
-]);
-
-$items = $itemsQuery->rowCount() ? $itemsQuery : [];
+if(isAuthenticated())
+{
+    $tasks = getAllTasks();
+}
+else
+{
+    $session->getFlashBag()->add('error', 'Please log in to see your tasks.');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,12 +60,13 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
     <div id="main-container" class="container">
         <div class="row">
             <div class="horizontal-align">
-                <?php if(empty($items)): ?>
+                <?= displayErrors(); ?>
+                <?php if(empty($tasks) && isAuthenticated()): ?>
                     <p>You haven't added any items yet!</p>
                 <?php else: ?>
                     <ul class="items">
-                        <?php foreach(getAllTasks() as $task): ?>
-                            <li class="item" data-id="<?= $task['id']; ?>">
+                        <?php foreach($tasks as $task): ?>
+                            <li class="item" data-id="<?= $task['id'] ?>">
                                 <?php include 'inc/task.php'; ?>
                             </li>
                         <?php endforeach; ?>
@@ -76,15 +75,17 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
             </div>
         </div>
 
-        <div class="row">
-            <div class="horizontal-align">
-                <form class="item-add" action="procedures/addTask.php" method="post">
-                    <input class="input-field" name="name" placeholder="Enter a task to complete..." autocomplete="off" required>
-                    <br>
-                    <input class="btn submit" type="submit" value="Add">
-                </form>
+        <?php if(isAuthenticated()): ?>
+            <div class="row">
+                <div class="horizontal-align">
+                    <form class="item-add" action="procedures/addTask.php" method="post">
+                        <input class="input-field" name="name" placeholder="Enter a task to complete..." autocomplete="off" required>
+                        <br>
+                        <input class="btn submit" type="submit" value="Add">
+                    </form>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

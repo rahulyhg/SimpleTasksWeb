@@ -45,10 +45,12 @@ function getTask($id)
             SELECT id, name, done
             FROM items
             WHERE id = :id
+            AND user = :user
         ");
 
         $query->execute([
-            'id' => $_GET['item']
+            'id' => $id,
+            'user' => getCurrentUser()['id']
         ]);
 
         return $query->fetch(PDO::FETCH_ASSOC);
@@ -67,8 +69,11 @@ function getAllTasks()
     {
         $query = $db->prepare("
             SELECT * FROM items
+            WHERE user = :user
         ");
-        $query->execute();
+        $query->execute([
+            'user' => getCurrentUser()['id']
+        ]);
         return $query->fetchAll();
     }
     catch(\Exception $e)
@@ -80,7 +85,6 @@ function getAllTasks()
 function addTask($name)
 {
     global $db;
-    $ownerId = 1;
 
     try
     {
@@ -91,7 +95,7 @@ function addTask($name)
 
         return $query->execute([
             'name' => $name,
-            'user' => $ownerId
+            'user' => getCurrentUser()['id']
         ]);
     }
     catch(\Exception $e)
@@ -103,7 +107,6 @@ function addTask($name)
 function updateTask($id, $name)
 {
     global $db;
-    $ownerId = 1;
 
     try
     {
@@ -117,7 +120,7 @@ function updateTask($id, $name)
         return $query->execute([
             'name' => $name,
             'id' => $id,
-            'user' => $ownerId
+            'user' => getCurrentUser()['id']
         ]);
     }
     catch(\Exception $e)
@@ -129,7 +132,6 @@ function updateTask($id, $name)
 function markTask($id, $status)
 {
     global $db;
-    $ownerId = 1;
 
     try
     {
@@ -144,7 +146,7 @@ function markTask($id, $status)
 
                 $query->execute([
                     'item' => $id,
-                    'user' => $ownerId
+                    'user' => getCurrentUser()['id']
                 ]);
                 break;
 
@@ -158,7 +160,7 @@ function markTask($id, $status)
 
                 $query->execute([
                     'item' => $id,
-                    'user' => $ownerId
+                    'user' => getCurrentUser()['id']
                 ]);
                 break;
         }
@@ -172,7 +174,6 @@ function markTask($id, $status)
 function deleteTask($id)
 {
     global $db;
-    $ownerId = 1;
 
     try
     {
@@ -184,7 +185,7 @@ function deleteTask($id)
 
         $query->execute([
             'id' => $id,
-            'user' => $ownerId
+            'user' => getCurrentUser()['id']
         ]);
     }
     catch(\Exception $e)
@@ -239,7 +240,7 @@ function findUserByEmail($email)
     }
 }
 
-function findUserByAccessToken()
+function getCurrentUser()
 {
     global $db;
 
