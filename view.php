@@ -5,7 +5,7 @@
  * Time: 7:16 PM
  */
 
-require_once 'app/init.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 if(!isset($_GET['item']))
 {
@@ -39,9 +39,8 @@ foreach($items as $item)
 }
 
 //Create links for different actions
-$markMsg = $itemDone ? 'mark.php?as=undone&item=' . $itemId : 'mark.php?as=done&item=' . $itemId;
-//$viewMsg = 'view.php?item=' . $id;
-$editMsg = 'edit.php?item=' . $itemId;
+$markMsg = $itemDone ? '/procedures/mark.php?as=undone&item=' . $itemId : '/procedures/mark.php?as=done&item=' . $itemId;
+$editMsg = '/procedures/edit.php?item=' . $itemId;
 ?>
 <!DOCTYPE html>
 <html>
@@ -89,10 +88,10 @@ $editMsg = 'edit.php?item=' . $itemId;
                 </form>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="horizontal-align">
-                <a class="btn submit text-center" href="redirect.php?url=index.php"><i class="fa fa-arrow-left text-success"></i> Go Back</a>
+                <a class="btn submit text-center" href="/procedures/redirect.php?url=/index.php"><i class="fa fa-arrow-left text-success"></i> Go Back</a>
             </div>
         </div>
 
@@ -118,7 +117,7 @@ $editMsg = 'edit.php?item=' . $itemId;
 
         <div class="row">
             <div class="horizontal-align">
-                <a class="btn submit text-center" href="delete.php?item=<?= $itemId; ?>"><i class="fa fa-times text-danger"></i> Delete</a>
+                <a class="btn submit text-center" href="procedures/delete.php?item=<?= $itemId; ?>"><i class="fa fa-times text-danger"></i> Delete</a>
             </div>
         </div>
     </div>

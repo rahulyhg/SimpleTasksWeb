@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/http-foundation": "3.1.6"
+    }
+}
+

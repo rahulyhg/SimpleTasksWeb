@@ -5,7 +5,7 @@
  * Time: 4:00 PM
  */
 
-require_once 'app/init.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 $itemsQuery = $db->prepare("
     SELECT id, name, done
@@ -59,7 +59,9 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
     <!-- Main content -->
     <div id="main-container" class="container">
         <div class="row">
-            <h1 style="font-weight: 700;" class="text-center"><?= $appName; ?></h1>
+            <div class="horizontal-align">
+                <h1 style="font-weight: 700;"><?= $appName; ?></h1>
+            </div>
         </div>
 
         <div class="row">
@@ -74,14 +76,13 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
 
                                 //Check if an item is done or not
                                 $isDone = $item['done'];
-                                $doneStatus = $isDone ? 'done' : 'undone';
 
                                 //Create links for different actions
-                                $markMsg = $isDone ? 'mark.php?as=undone&item=' . $id : 'mark.php?as=done&item=' . $id;
+                                $markMsg = $isDone ? '/procedures/mark.php?as=undone&item=' . $id : '/procedures/mark.php?as=done&item=' . $id;
                                 $viewMsg = 'view.php?item=' . $id;
-                                $editMsg = 'edit.php?item=' . $id; ?>
+                                $editMsg = '/procedures/edit.php?item=' . $id; ?>
                             <li class="item" data-id="<?= $id; ?>">
-                                <a class="item-<?= $doneStatus; ?>" href="<?= $viewMsg; ?>">
+                                <a class="<?php if($isDone) { echo 'item-done'; } ?> " href="<?= $viewMsg; ?>">
                                     <form action="<?= $markMsg; ?>" method="post">
                                         <div class="item-checkbox">
                                             <input id="item-checkbox-input-<?= $id; ?>"
@@ -114,7 +115,7 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
 
         <div class="row">
             <div class="horizontal-align">
-                <form class="item-add" action="add.php" method="post">
+                <form class="item-add" action="procedures/add.php" method="post">
                     <input class="input" name="name" placeholder="Enter a task to complete..." autocomplete="off" required>
                     <br>
                     <br>
@@ -124,7 +125,7 @@ $items = $itemsQuery->rowCount() ? $itemsQuery : [];
         </div>
     </div>
 
-    <?php include 'app/context-menu.php' ?>
+    <?php include 'inc/context-menu.php' ?>
 </body>
 
 </html>
