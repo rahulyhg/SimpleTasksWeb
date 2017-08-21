@@ -9,7 +9,7 @@ session_start();
 
 $_SESSION['user_id'] = 1;
 
-$db = new PDO('sensitive', 'sensitive', 'sensitive');
+$db = new PDO('mysql:dbname=id2640085_simpletasksweb;host=localhost', 'id2640085_mrstank', '?LBev5B3aAV62j!Q^fg!');
 $appName = "SimpleTasks";
 
 //Handle this on another way

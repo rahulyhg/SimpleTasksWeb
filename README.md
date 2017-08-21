@@ -2,6 +2,8 @@
 
 # Simple Tasks Web
 
+Visit https://simpletasksweb.000webhostapp.com to see the application in action.
+
 ## App Description
 SimpleTasksWeb is a port of SimpleTasks for Android for online use. The design has been tried to be as close as possibile
 to the native application, following Google's Material Design.
@@ -17,7 +19,7 @@ download the native Android app on the
 - Add user authentication
 - Fix any bugs that might be present
 - Tidy up PHP and JavaScript code a bit
-- Deploy to free web server
+- ~~Deploy to free web server~~
 - Completely rewrite mobile app
 - Purchase hosting and domain (this is a ways away due to mobile app being incomplete)
 

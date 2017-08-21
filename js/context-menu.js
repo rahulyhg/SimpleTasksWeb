@@ -136,11 +136,11 @@ var contextMenu = {
     {
         document.addEventListener("contextmenu", function(e)
         {
+            e.preventDefault(); //Always prevent the default context menu
             contextMenu.taskItemInContext = clickInsideElement(e, contextMenu.taskItemClassName);
 
             if(contextMenu.taskItemInContext)
             {
-                e.preventDefault();
                 toggleMenuOn();
                 positionMenu(e);
             }

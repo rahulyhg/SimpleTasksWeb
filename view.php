@@ -6,6 +6,7 @@
  */
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
 
 if(!isset($_GET['item']))
 {
@@ -39,8 +40,8 @@ foreach($items as $item)
 }
 
 //Create links for different actions
-$markMsg = $itemDone ? '/procedures/mark.php?as=undone&item=' . $itemId : '/procedures/mark.php?as=done&item=' . $itemId;
-$editMsg = '/procedures/edit.php?item=' . $itemId;
+$markMsg = $itemDone ? '/procedures/markTask.php?as=undone&item=' . $itemId : '/procedures/markTask.php?as=done&item=' . $itemId;
+$editMsg = '/procedures/editTask.php?item=' . $itemId;
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,6 +70,7 @@ $editMsg = '/procedures/edit.php?item=' . $itemId;
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/view.css">
+    <link rel="stylesheet" type="text/css" href="css/context-menu.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -78,6 +80,8 @@ $editMsg = '/procedures/edit.php?item=' . $itemId;
 </head>
 
 <body>
+    <?php include 'inc/header.php'; ?>
+
     <!-- Main content -->
     <div id="main-container" class="container">
         <div class="row">
@@ -91,7 +95,7 @@ $editMsg = '/procedures/edit.php?item=' . $itemId;
 
         <div class="row">
             <div class="horizontal-align">
-                <a class="btn submit text-center" href="/procedures/redirect.php?url=/index.php"><i class="fa fa-arrow-left text-success"></i> Go Back</a>
+                <a class="btn submit text-center" href="/"><i class="fa fa-arrow-left text-success"></i> Go Back</a>
             </div>
         </div>
 
@@ -117,12 +121,14 @@ $editMsg = '/procedures/edit.php?item=' . $itemId;
 
         <div class="row">
             <div class="horizontal-align">
-                <a class="btn submit text-center" href="procedures/delete.php?item=<?= $itemId; ?>"><i class="fa fa-times text-danger"></i> Delete</a>
+                <a class="btn submit text-center" href="procedures/deleteTask.php?item=<?= $itemId; ?>"><i class="fa fa-times text-danger"></i> Delete</a>
             </div>
         </div>
     </div>
 
     <script src="js/view.js"></script>
+
+    <?php include 'inc/context-menu.php' ?>
 </body>
 
 </html>

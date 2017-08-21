@@ -96,12 +96,12 @@
     //Add event listener for when a user wants to mark a task
     document.addEventListener("onTaskMark", function()
     {
-        window.location.href = "/procedures/mark.php?as=done&item=" + contextMenu.taskItemInContext.getAttribute("data-id");
+        window.location.href = "/procedures/markTask.php?as=done&item=" + contextMenu.taskItemInContext.getAttribute("data-id");
     });
 
     //Add event listener for when a user wants to delete an item through the context menu
     document.addEventListener("onTaskDelete", function()
     {
-        window.location.href = "/procedures/delete.php?item=" + contextMenu.taskItemInContext.getAttribute("data-id");
+        window.location.href = "/procedures/deleteTask.php?item=" + contextMenu.taskItemInContext.getAttribute("data-id");
     });
 </script>
