@@ -1,13 +1,14 @@
 <?php
 /**
- * Author: Kyle Stankovich
+ * Author: KyleStank
  * Date: 8/21/17
- * Time: 2:47 AM
+ * Time: 3:26 PM
  */
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
-?>
 
+requireAdmin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,6 +40,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
 
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
     <link rel="stylesheet" type="text/css" href="css/context-menu.css">
 </head>
 
@@ -49,15 +51,52 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
     <div id="main-container" class="container">
         <div class="row">
             <div class="horizontal-align">
-                <form action="procedures/loginUser.php" method="post">
-                    <h1 style="margin: 0; padding: 0" class="text-center">Login</h1>
-                    <?php echo displayErrors(); ?>
-                    <input class="input-field light-placeholder" name="username" placeholder="Username/Email..." autocomplete="off" required>
-                    <br>
-                    <input class="input-field light-placeholder" type="password" name="password" placeholder="Password..." autocomplete="off" required>
-                    <br>
-                    <input style="" class="btn submit" type="submit" value="Login">
-                </form>
+                <h1 style="margin: 0; padding: 0" class="text-center">Admin</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="horizontal-align">
+                <?= displayErrors(); ?>
+                <?= displaySuccess(); ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="horizontal-align">
+                <div class="panel">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Registered</th>
+                                <th>Promote/Demote</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        <?php foreach(getAllUsers() as $user): ?>
+                            <tr>
+                                <td><?= $user['username']; ?></td>
+                                <td><?= $user['email']; ?></td>
+                                <td><?= $user['created'] ?></td>
+                                <?php if($user['id'] != getCurrentUser()['id']): ?>
+                                    <td>
+                                        <?php if($user['role_id'] == 1): ?>
+                                            <a class="btn btn-xs btn-warning"
+                                               href="/procedures/adjustRole.php?role=demote&user=<?= $user['id']; ?>">Demote from Admin</a>
+                                        <?php elseif($user['role_id'] == 2): ?>
+                                            <a class="btn btn-xs btn-warning"
+                                               href="/procedures/adjustRole.php?role=promote&user=<?= $user['id']; ?>">Promote to admin</a>
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

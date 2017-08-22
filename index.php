@@ -61,6 +61,9 @@ else
         <div class="row">
             <div class="horizontal-align">
                 <?= displayErrors(); ?>
+            </div>
+
+            <div class="horizontal-align">
                 <?php if(empty($tasks) && isAuthenticated()): ?>
                     <p>You haven't added any items yet!</p>
                 <?php else: ?>

@@ -1,0 +1,18 @@
+table
+{
+    box-shadow: 1px 1px 3px black; /* Material design, "Grey", 900 */
+    -webkit-box-shadow: 1px 1px 3px black;
+    -moz-box-shadow: 2px 2px 10px black;
+    -o-box-shadow: 2px 2px 10px black;
+}
+
+table, thead, tbody, tr, th, td
+{
+    background-color: #424242 !important; /* Material Design, "Grey", 800 */
+    border: 1px solid #212121 !important; /* Material Design, "Grey", 900 */
+}
+
+.panel
+{
+    border: none !important;
+}

@@ -25,6 +25,9 @@
             <ul class="nav navbar-nav navbar-right">
                 <?php if(isAuthenticated()): ?>
                     <li><a class="nav-link" href="/account.php">My Account</a></li>
+                    <?php if(getCurrentUser()['role_id'] == 1): ?>
+                        <li><a class="nav-link" href="/admin.php">Admin</a></li>
+                    <?php endif; ?>
                     <li><a class="nav-link" href="/procedures/logoutUser.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 <?php else: ?>
                     <li><a class="nav-link" href="/login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

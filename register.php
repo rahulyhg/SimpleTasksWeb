@@ -39,7 +39,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
 
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/register.css">
     <link rel="stylesheet" type="text/css" href="css/context-menu.css">
 </head>
 

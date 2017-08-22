@@ -135,7 +135,7 @@ function markTask($id, $status)
 
     try
     {
-        switch($status) {
+        switch(strtolower($status)) {
             case 'done':
                 $query = $db->prepare("
                     UPDATE items
@@ -272,6 +272,26 @@ function getCurrentUser()
     }
 }
 
+function getAllUsers()
+{
+    global $db;
+
+    try
+    {
+        $query = $db->prepare("
+            SELECT * FROM users
+        ");
+
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch(\Exception $e)
+    {
+        throw $e;
+    }
+}
+
 function createUser($username, $email, $password)
 {
     global $db;
@@ -279,8 +299,8 @@ function createUser($username, $email, $password)
     try
     {
         $query = $db->prepare("
-            INSERT INTO users (username, email, password, role_id)
-            VALUES (:username, :email, :password, :role_id)
+            INSERT INTO users (username, email, password, role_id, created)
+            VALUES (:username, :email, :password, :role_id, NOW())
         ");
 
         $query->execute([
@@ -323,6 +343,50 @@ function updatePassword($password, $userId)
     return true;
 }
 
+function promote($userId)
+{
+    global $db;
+
+    try
+    {
+        $query = $db->prepare("
+            UPDATE users
+            SET role_id = 1
+            WHERE id = :user
+        ");
+
+        $query->execute([
+            'user' => $userId,
+        ]);
+    }
+    catch(\Exception $e)
+    {
+        throw $e;
+    }
+}
+
+function demote($userId)
+{
+    global $db;
+
+    try
+    {
+        $query = $db->prepare("
+            UPDATE users
+            SET role_id = 2
+            WHERE id = :user
+        ");
+
+        $query->execute([
+            'user' => $userId,
+        ]);
+    }
+    catch(\Exception $e)
+    {
+        throw $e;
+    }
+}
+
 function decodeJWT($prop = null)
 {
     \Firebase\JWT\JWT::$leeway = 1;
@@ -360,9 +424,61 @@ function isAuthenticated()
     }
 }
 
+function isAdmin()
+{
+    if(!isAuthenticated())
+    {
+        return false;
+    }
+
+    try
+    {
+        $isAdmin = decodeJWT('is_admin');
+    }
+    catch(\Exception $e)
+    {
+        return false;
+    }
+
+    return (boolean)$isAdmin;
+}
+
 function requireAuth()
 {
     if(!isAuthenticated())
+    {
+        $accessToken = new \Symfony\Component\HttpFoundation\Cookie('access_token',
+            'Expired',
+            time() - 3600,
+            '/',
+            getenv('COOKIE_DOMAIN'));
+        redirect("../login.php", ['cookies' => [$accessToken]]);
+    }
+}
+
+function requireAdmin()
+{
+    global $session;
+
+    if(!isAuthenticated())
+    {
+        $accessToken = new \Symfony\Component\HttpFoundation\Cookie('access_token',
+            'Expired',
+            time() - 3600,
+            '/',
+            getenv('COOKIE_DOMAIN'));
+        redirect("../login.php", ['cookies' => [$accessToken]]);
+    }
+
+    try
+    {
+        if(!decodeJWT('is_admin'))
+        {
+            $session->getFlashBag()->add('error', 'Not Authorized.');
+            redirect('/');
+        }
+    }
+    catch(\Exception $e)
     {
         $accessToken = new \Symfony\Component\HttpFoundation\Cookie('access_token',
             'Expired',
