@@ -194,29 +194,6 @@ function deleteTask($id)
     }
 }
 
-function findUserByUsername($username)
-{
-    global $db;
-
-    try
-    {
-        $query = $db->prepare("
-            SELECT * FROM users
-            WHERE username = :username
-        ");
-
-        $query->execute([
-            'username' => $username
-        ]);
-
-        return $query->fetch(PDO::FETCH_ASSOC);
-    }
-    catch(\Exception $e)
-    {
-        throw $e;
-    }
-}
-
 function findUserByEmail($email)
 {
     global $db;
@@ -292,19 +269,18 @@ function getAllUsers()
     }
 }
 
-function createUser($username, $email, $password)
+function createUser($email, $password)
 {
     global $db;
 
     try
     {
         $query = $db->prepare("
-            INSERT INTO users (username, email, password, role_id, created)
-            VALUES (:username, :email, :password, :role_id, NOW())
+            INSERT INTO users (email, password, role_id, created)
+            VALUES (:email, :password, :role_id, NOW())
         ");
 
         $query->execute([
-            'username' => $username,
             'email' => $email,
             'password' => $password,
             'role_id' => 2
@@ -495,7 +471,7 @@ function displaySuccess()
 
     if(!$session->getFlashBag()->has('success'))
     {
-        return;
+        return '';
     }
 
     $messages = $session->getFlashBag()->get('success');
@@ -516,7 +492,7 @@ function displayErrors()
 
     if(!$session->getFlashBag()->has('error'))
     {
-        return;
+        return '';
     }
 
     $messages = $session->getFlashBag()->get('error');

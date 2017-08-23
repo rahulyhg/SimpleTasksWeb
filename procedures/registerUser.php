@@ -7,7 +7,6 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
 
-$username = request()->get('username');
 $email = request()->get('email');
 $password = request()->get('password');
 $confirmPassword = request()->get('confirm_password');
@@ -16,14 +15,6 @@ $confirmPassword = request()->get('confirm_password');
 if($password != $confirmPassword)
 {
     $session->getFlashBag()->add('error', 'Passwords do not match.');
-    redirect('../register.php');
-}
-
-//Check if user already exists with the same username
-$user = findUserByUsername($username);
-if(!empty($user))
-{
-    $session->getFlashBag()->add('error', 'Username taken.');
     redirect('../register.php');
 }
 
@@ -39,7 +30,7 @@ if(!empty($user))
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 
 //Create the user
-$user = createUser($username, $email, $hashed);
+$user = createUser($email, $hashed);
 
 /** Log in the user automatically */
 //Set an expire time

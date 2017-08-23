@@ -7,20 +7,15 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
 
-$username = request()->get('username');
+$username = request()->get('email');
 $password = request()->get('password');
 
-//Search for user by username. If not found, search by email.
-$user = findUserByUsername($username);
+//Search for user by email.
+$user = findUserByEmail($username);
 if(empty($user))
 {
-    $user = findUserByEmail($username);
-
-    if(empty($user))
-    {
-        $session->getFlashBag()->add('error', 'Username/Email was not found.');
-        redirect('../login.php');
-    }
+    $session->getFlashBag()->add('error', 'Email was not found.');
+    redirect('../login.php');
 }
 
 //Check is the passwords match

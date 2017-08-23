@@ -52,7 +52,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
                 <form action="procedures/loginUser.php" method="post">
                     <h1 style="margin: 0; padding: 0" class="text-center">Login</h1>
                     <?php echo displayErrors(); ?>
-                    <input class="input-field light-placeholder" name="username" placeholder="Username/Email..." autocomplete="off" required>
+                    <input class="input-field light-placeholder" name="email" placeholder="Email..." autocomplete="off" required>
                     <br>
                     <input class="input-field light-placeholder" type="password" name="password" placeholder="Password..." autocomplete="off" required>
                     <br>

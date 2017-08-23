@@ -68,7 +68,6 @@ requireAdmin();
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Username</th>
                                 <th>Email</th>
                                 <th>Registered</th>
                                 <th>Promote/Demote</th>
@@ -78,7 +77,6 @@ requireAdmin();
                         <tbody>
                         <?php foreach(getAllUsers() as $user): ?>
                             <tr>
-                                <td><?= $user['username']; ?></td>
                                 <td><?= $user['email']; ?></td>
                                 <td><?= $user['created'] ?></td>
                                 <?php if($user['id'] != getCurrentUser()['id']): ?>
