@@ -419,6 +419,25 @@ function isAdmin()
     return (boolean)$isAdmin;
 }
 
+function isOwner($ownerId)
+{
+    if(!isAuthenticated())
+    {
+        return false;
+    }
+
+    try
+    {
+        $userId = decodeJWT('sub');
+    }
+    catch(\Exception $e)
+    {
+        return false;
+    }
+
+    return $ownerId == $userId;
+}
+
 function requireAuth()
 {
     if(!isAuthenticated())

@@ -7,7 +7,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/bootstrap.php';
 
-$username = request()->get('email');
+$email = request()->get('email');
 $password = request()->get('password');
 
 //Search for user by email.
@@ -40,7 +40,6 @@ $jwt = \Firebase\JWT\JWT::encode([
 
 //Create cookies
 $accessToken = new Symfony\Component\HttpFoundation\Cookie('access_token', $jwt, $expireTime, '/', getenv('COOKIE_DOMAIN'));
-$usernameCookie = new Symfony\Component\HttpFoundation\Cookie('username', $username, $expireTime, '/', getenv('COOKIE_DOMAIN'));
 
 //Redirect with the cookie
-redirect('/', ['cookies' => [$accessToken, $usernameCookie]]);
+redirect('/', ['cookies' => [$accessToken]]);
