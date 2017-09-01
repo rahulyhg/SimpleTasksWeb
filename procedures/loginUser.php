@@ -11,7 +11,7 @@ $email = request()->get('email');
 $password = request()->get('password');
 
 //Search for user by email.
-$user = findUserByEmail($username);
+$user = findUserByEmail($email);
 if(empty($user))
 {
     $session->getFlashBag()->add('error', 'Email was not found.');
