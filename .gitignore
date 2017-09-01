@@ -4,3 +4,4 @@ composer_2.phar
 composer.lock
 config.php
 /inc/.env
+/.idea
